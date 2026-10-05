@@ -60,39 +60,47 @@ import { navGrupo, site } from '@/shared/config'
 </header>
 
 <script>
-  // Scroll glass
-  const header = document.getElementById('site-header')
-  const onScroll = () => {
-    header?.setAttribute('data-scrolled', String(window.scrollY > 24))
-  }
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
+  let menuController: AbortController | undefined
 
-  // Menú móvil
-  const toggle = document.getElementById('menu-toggle')
-  const menu = document.getElementById('mobile-menu')
+  function initHeader() {
+    menuController?.abort()
+    menuController = new AbortController()
+    const { signal } = menuController
+    const header = document.getElementById('site-header')
+    const toggle = document.getElementById('menu-toggle')
+    const menu = document.getElementById('mobile-menu')
+    if (!header) return
 
-  function closeMenu() {
-    menu?.setAttribute('hidden', '')
-    toggle?.setAttribute('aria-expanded', 'false')
-    toggle?.setAttribute('aria-label', 'Abrir menú')
-    header?.removeAttribute('data-menu-open')
-  }
-
-  toggle?.addEventListener('click', () => {
-    const isOpen = toggle.getAttribute('aria-expanded') === 'true'
-    if (isOpen) {
-      closeMenu()
-    } else {
-      menu?.removeAttribute('hidden')
-      toggle.setAttribute('aria-expanded', 'true')
-      toggle.setAttribute('aria-label', 'Cerrar menú')
-      header?.setAttribute('data-menu-open', 'true')
+    const closeMenu = () => {
+      menu?.setAttribute('hidden', '')
+      toggle?.setAttribute('aria-expanded', 'false')
+      toggle?.setAttribute('aria-label', 'Abrir menú')
+      header.removeAttribute('data-menu-open')
     }
-  })
 
-  // Cerrar al elegir un enlace
-  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu))
+    const onScroll = () => header.setAttribute('data-scrolled', String(window.scrollY > 24))
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true, signal })
+
+    toggle?.addEventListener('click', () => {
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu()
+      } else {
+        menu?.removeAttribute('hidden')
+        toggle.setAttribute('aria-expanded', 'true')
+        toggle.setAttribute('aria-label', 'Cerrar menú')
+        header.setAttribute('data-menu-open', 'true')
+      }
+    }, { signal })
+
+    menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu, { signal }))
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu()
+    }, { signal })
+  }
+
+  initHeader()
+  document.addEventListener('astro:page-load', initHeader)
 </script>
 
 <style>
