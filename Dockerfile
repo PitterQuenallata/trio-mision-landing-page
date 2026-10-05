@@ -1,8 +1,8 @@
 # Construye el sitio estático de Astro.
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
+RUN corepack enable && corepack prepare pnpm@11.15.1 --activate
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
