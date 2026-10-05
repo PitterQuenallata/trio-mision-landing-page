@@ -4,6 +4,7 @@ import VerMas from '@/shared/components/ui/VerMas.astro'
 interface Persona {
   nombre: string
   foto?: string
+  distintivoLuto?: boolean
 }
 
 const iniciales = (nombre: string) => nombre.split(/\s+/).map((parte) => parte[0]).slice(0, 2).join('')
@@ -33,7 +34,7 @@ const antiguos: Persona[] = [
   { nombre: 'Juan Julio Apaza', foto: '/assets/integrantes/antiguos/juancho.png' },
   { nombre: 'Abdías Caso', foto: '/assets/integrantes/antiguos/abdias.png' },
   { nombre: 'Edgar Romero', foto: '/assets/integrantes/antiguos/edgar-romero.png' },
-  { nombre: 'Eric Apaza', foto: '/assets/integrantes/antiguos/erick.png' },
+  { nombre: 'Eric Apaza', foto: '/assets/integrantes/antiguos/erick.png', distintivoLuto: true },
   { nombre: 'Gerson Apaza', foto: '/assets/integrantes/antiguos/gerson.png' },
   { nombre: 'Hernán Colque', foto: '/assets/integrantes/antiguos/hernan.png' },
   { nombre: 'Justiniano Arojas', foto: '/assets/integrantes/antiguos/justiniano.png' },
@@ -109,6 +110,7 @@ const antiguos: Persona[] = [
       {antiguos.map((persona, index) => (
         <article class="legacy-card" style={`--delay:${(index % 7) * 50}ms`}>
           {persona.foto ? <img src={persona.foto} alt={`${persona.nombre}, integrante de una etapa anterior de Trio Misión`} loading="lazy" /> : <div class="legacy-placeholder" aria-label={`Retrato pendiente para ${persona.nombre}`}>{iniciales(persona.nombre)}</div>}
+          {persona.distintivoLuto && <img class="legacy-memorial-mark" src="/assets/ui/cinta-luto.webp" alt="En memoria" loading="lazy" />}
           <h4 class="title-gradient">{persona.nombre}</h4>
         </article>
       ))}
@@ -182,6 +184,7 @@ const antiguos: Persona[] = [
   .legacy-card.revealed { opacity: 1; translate: 0 0; }
   .legacy-card:hover { z-index: 2; transform: translateY(-4px); box-shadow: 0 0 0 1px rgb(199 168 107 / .55), 0 0 1.6rem rgb(199 168 107 / .12); }
   .legacy-card img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: saturate(.96) brightness(.92); }
+  .legacy-card img.legacy-memorial-mark { position: absolute; z-index: 3; top: .55rem; right: .55rem; width: 2rem; height: 2rem; object-fit: contain; object-position: center; filter: none; }
   .legacy-placeholder { position: absolute; inset: 0; font-size: clamp(2rem, 4vw, 3.5rem); }
   .legacy-card::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, #080706); }
   .legacy-card h4 { position: absolute; z-index: 1; inset: auto .3rem .65rem; margin: 0; font-size: clamp(.5rem, .8vw, .72rem); font-weight: 700; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
