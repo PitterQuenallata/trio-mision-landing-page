@@ -3,14 +3,14 @@
 import SectionTitle from '@/shared/components/ui/SectionTitle.astro'
 
 const caracteristicas = [
-  { icono: '📖', titulo: 'Himnario gratis', texto: 'Los himnos del Himnario Adventista con acordes, número por número, sin pagar nada.' },
-  { icono: '🎵', titulo: 'Catálogo premium', texto: 'Álbumes completos de Trio Misión y otros grupos, con letra y acordes fieles a la grabación.' },
-  { icono: '🎤', titulo: 'Presentación en vivo', texto: 'Modo escenario: pantalla completa, fondo negro, letra gigante. Armá el repertorio del sábado y cantá.' },
-  { icono: '🎸', titulo: 'Transposición', texto: 'Subí o bajá el tono con un toque. Soporta capo y notación latina (Do-Re-Mi) o americana (C-D-E).' },
-  { icono: '📂', titulo: 'Mi Música', texto: 'Importá tus PDF o archivos ChordPro, creá canciones propias y organizalas en carpetas.' },
-  { icono: '✈️', titulo: 'Modo offline', texto: 'Descargá álbumes completos y usalos sin internet (Premium).' },
-  { icono: '🔄', titulo: 'Sincronización', texto: 'Tu música y repertorios en todos tus dispositivos (Premium).' },
-  { icono: '🎛', titulo: 'Afinador', texto: 'Afinador cromático integrado para guitarra.' },
+  { titulo: 'Himnario gratis', texto: 'Los himnos del Himnario Adventista con acordes, número por número, sin pagar nada.' },
+  { titulo: 'Catálogo premium', texto: 'Álbumes completos de Trio Misión y otros grupos, con letra y acordes fieles a la grabación.' },
+  { titulo: 'Presentación en vivo', texto: 'Modo escenario: pantalla completa, fondo negro, letra gigante. Armá el repertorio del sábado y cantá.' },
+  { titulo: 'Transposición', texto: 'Subí o bajá el tono con un toque. Soporta capo y notación latina (Do-Re-Mi) o americana (C-D-E).' },
+  { titulo: 'Mi Música', texto: 'Importá tus PDF o archivos ChordPro, creá canciones propias y organizalas en carpetas.' },
+  { titulo: 'Modo offline', texto: 'Descargá álbumes completos y usalos sin internet (Premium).' },
+  { titulo: 'Sincronización', texto: 'Tu música y repertorios en todos tus dispositivos (Premium).' },
+  { titulo: 'Afinador', texto: 'Afinador cromático integrado para guitarra.' },
 ]
 ---
 
@@ -21,8 +21,7 @@ const caracteristicas = [
     {
       caracteristicas.map((item, index) => (
         <div class="feature-card" data-reveal style={`--delay:${index * 70}ms`}>
-          <span class="text-2xl" aria-hidden="true">{item.icono}</span>
-          <h3 class="mt-3 text-sm font-black tracking-[0.12em] text-theme-cream">{item.titulo}</h3>
+          <h3 class="text-sm font-black tracking-[0.12em] text-theme-cream">{item.titulo}</h3>
           <p class="mt-2 font-sans text-xs leading-relaxed text-theme-cream/55">{item.texto}</p>
         </div>
       ))
