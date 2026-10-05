@@ -1,0 +1,56 @@
+---
+// Header de la página de la app — variante con vuelta al sitio del grupo.
+// Siempre muestra ambos destinos: da igual si se llega desde / o directo.
+import { navApp, playStoreUrl, portal } from '@/shared/config'
+---
+
+<header
+  id="app-header"
+  class="fixed inset-x-0 top-0 z-40 transition-colors duration-300 data-[scrolled=true]:bg-theme-ink/60 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:backdrop-contrast-125"
+>
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a
+      href="/"
+      class="text-xs font-black tracking-[0.2em] text-theme-cream/80 transition-colors hover:text-theme-gold"
+    >
+      ← Trio Misión
+    </a>
+    <ul class="hidden items-center gap-6 md:flex lg:gap-8">
+      {
+        navApp.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="relative text-xs tracking-[0.2em] text-theme-cream/80 transition-colors hover:text-theme-cream"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex items-center gap-3">
+      <a
+        href={portal.login}
+        class="rounded-pill px-4 py-2 text-[0.65rem] font-black tracking-[0.14em] text-theme-cream shadow-[0_0_0_1px_color-mix(in_srgb,var(--color-theme-gold)_45%,transparent)] transition-all hover:text-theme-gold hover:shadow-[0_0_0_1px_color-mix(in_srgb,var(--color-theme-gold)_75%,transparent)]"
+      >
+        Iniciar sesión
+      </a>
+      <a
+        href={playStoreUrl}
+        class="gold-metallic rounded-pill px-4 py-2 text-[0.65rem] font-black tracking-[0.14em]"
+      >
+        Google Play
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('app-header')
+  const onScroll = () => {
+    header?.setAttribute('data-scrolled', String(window.scrollY > 24))
+  }
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+</script>
